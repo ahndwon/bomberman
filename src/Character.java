@@ -38,6 +38,7 @@ public class Character {
             playerBombs.add(new Bomb(posX, posY));
             allBombs.add(playerBombs.get(playerBombs.size()-1));
             Map.setBombBlock(posX, posY);
+            Map.showMap();
         }
     }
 
@@ -79,7 +80,6 @@ public class Character {
                             if (getBomb(posX, bomb.getY()) != null) {
                                 getBomb(posX, bomb.getY()).setTimer(bomb.getTimer());
                                 allBombs.remove(getBomb(posX, bomb.getY()));
-
                             }
                         }
                         if (Map.getBlock(posX, bomb.getY()).getType() != Constant.BLOCK_NOT_FRAGILE) {
@@ -87,21 +87,24 @@ public class Character {
                         }
                         if (Map.getBlock(posX, bomb.getY()).getType() == Constant.BLOCK_FRAGILE) {
                             Map.getBlock(posX, bomb.getY()).setCanGo(true);
+                            Map.getBlock(posX, bomb.getY()).setExplosion(true);
                         }
                         break;
                     }
                     if (rightExplosion) {
-                        Map.getBlock(posX, bomb.getY()).setExplosion(true);
+
                         if (j == bombPower - 2) {
                             p.image(explodeRightImage[0], posX * Constant.BLOCK_WIDTH, y, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                         } else {
                             p.image(explodeRightImage[1], posX * Constant.BLOCK_WIDTH, y, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                         }
                     }
+                    Map.getBlock(posX, bomb.getY()).setExplosion(true);
                 }
 
                 for (int j = 0; j < bombPower - 1; j++) {
                     int posY = bomb.getY() + j + 1 < 20 ? bomb.getY() + j + 1 : 14;
+
                     if (Map.getBlock(bomb.getX(), posY).getType() != 0) {
                         downExplosion = false;
                         if (Map.getBlock(bomb.getX(), posY).getType() == Constant.BOMB) {
@@ -112,21 +115,27 @@ public class Character {
                         }
                         if (Map.getBlock(bomb.getX(), posY).getType() != Constant.BLOCK_NOT_FRAGILE)
                             Map.getBlock(bomb.getX(), posY).setCanGo(true);
+                        if (Map.getBlock(bomb.getX(), posY).getType() == Constant.BLOCK_FRAGILE) {
+                            Map.getBlock(bomb.getX(), posY).setCanGo(true);
+                            Map.getBlock(bomb.getX(), posY).setExplosion(true);
+                        }
                         break;
                     }
                     if (downExplosion) {
-                        Map.getBlock(bomb.getX(), posY).setExplosion(true);
+
                         if (j == bombPower - 2)
                             p.image(explodeDownImage[0], x, posY * Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                         else
                             p.image(explodeDownImage[1], x, posY * Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                     }
+                    Map.getBlock(bomb.getX(), posY).setExplosion(true);
                 }
 
 
                 for (int j = 0; j < bombPower - 1; j++) {
                     int posX = bomb.getX() - (j + 1) < 0 ? 0 : bomb.getX() - (j + 1);
-                    if (Map.getBlock(posX, bomb.getY()).getType() != 0) {
+
+                    if (Map.getBlock(posX, bomb.getY()).getType() != 0)  {
                         leftExplosion = false;
                         if (Map.getBlock(posX, bomb.getY()).getType() == Constant.BOMB) {
                             if (getBomb(posX, bomb.getY()) != null) {
@@ -136,20 +145,26 @@ public class Character {
                         }
                         if (Map.getBlock(posX, bomb.getY()).getType() != Constant.BLOCK_NOT_FRAGILE)
                             Map.getBlock(posX, bomb.getY()).setCanGo(true);
+                        if (Map.getBlock(posX, bomb.getY()).getType() == Constant.BLOCK_FRAGILE) {
+                            Map.getBlock(posX, bomb.getY()).setCanGo(true);
+                            Map.getBlock(posX, bomb.getY()).setExplosion(true);
+                        }
                         break;
                     }
                     if (leftExplosion) {
-                        Map.getBlock(posX, bomb.getY()).setExplosion(true);
+
                         if (j == bombPower - 2)
                             p.image(explodeLeftImage[0], posX * Constant.BLOCK_WIDTH, y, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                         else
                             p.image(explodeLeftImage[1], posX * Constant.BLOCK_WIDTH, y, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                     }
+                    Map.getBlock(posX, bomb.getY()).setExplosion(true);
                 }
 
                 for (int j = 0; j < bombPower - 1; j++) {
                     int posY = bomb.getY() - (j + 1) < 0 ? 0 : bomb.getY() - (j + 1);
-                    if (Map.getBlock(bomb.getX(), posY).getType() != 0) {
+
+                    if (Map.getBlock(bomb.getX(), posY).getType() != 0 ) {
                         upExplosion = false;
                         if (Map.getBlock(bomb.getX(), posY).getType() == Constant.BOMB) {
                             if (getBomb(bomb.getX(), posY) != null) {
@@ -159,15 +174,20 @@ public class Character {
                         }
                         if (Map.getBlock(bomb.getX(), posY).getType() != Constant.BLOCK_NOT_FRAGILE)
                             Map.getBlock(bomb.getX(), posY).setCanGo(true);
+
+                        if (Map.getBlock(bomb.getX(), posY).getType() == Constant.BLOCK_FRAGILE) {
+                            Map.getBlock(bomb.getX(), posY).setCanGo(true);
+                            Map.getBlock(bomb.getX(), posY).setExplosion(true);
+                        }
                         break;
                     }
                     if (upExplosion) {
-                        Map.getBlock(bomb.getX(), posY).setExplosion(true);
                         if (j == bombPower - 2)
                             p.image(explodeUpImage[0], x, posY * Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                         else
                             p.image(explodeUpImage[1], x, posY * Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                     }
+                    Map.getBlock(bomb.getX(), posY).setExplosion(true);
                 }
             }
 
@@ -176,12 +196,10 @@ public class Character {
                 int bombY = bomb.getY();
 
                 for (int j = 0; j < bombPower; j++) {
-                    if (Map.getBlock(bombX + j, bombY) != null) {
+                    if (Map.getBlock(bombX + j, bombY) != null && Map.getBlock(bombX + j, bombY).isExplosion()) {
                         if (Map.getBlock(bombX + j, bombY).getType() != 0) {
                             Map.getBlock(bombX + j, bombY).setType(0);
                         }
-                    }
-                    if (Map.getBlock(bombX + j, bombY) != null && Map.getBlock(bombX + j, bombY).isExplosion()) {
                         Map.getBlock(bombX + j, bombY).setExplosion(false);
                     }
                     if (Map.getBlock(bombX - j, bombY) != null && Map.getBlock(bombX - j, bombY).isExplosion()) {
