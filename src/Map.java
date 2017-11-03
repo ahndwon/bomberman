@@ -1,6 +1,7 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,14 @@ public class Map {
             }
             System.out.println();
         }
+    }
+
+    public static void setBombBlock(int posX, int posY) {
+        map[posX][posY] = Constant.BOMB;
+        blockMap.add(new Block(true, Constant.BOMB, posX, posY));
+    }
+    public static void setNullBlock(int posX, int posY) {
+        map[posX][posY] = Constant.BLOCK_NULL;
     }
 
     public static Block getBlock(int x, int y) {
@@ -64,7 +73,7 @@ public class Map {
     private void playerSetup() {
         map[1][1] = Constant.PLAYER1;
         map[1][2] = map[2][1] = 0;
-        map[18][13] = Constant.PLAYER1;
+        map[18][13] = Constant.PLAYER2;
         map[17][13] = map[18][12] = 0;
     }
 
@@ -132,33 +141,28 @@ public class Map {
         for (int i = 0; i < Constant.MAP_WIDTH; i++) {
             for (int j = 0; j < Constant.MAP_HEIGHT; j++) {
                 if (map[i][j] == Constant.BLOCK_NOT_FRAGILE)
-                    p.image(imgs[0], i * 40, j * 40);
-//                if (map[i][j] == Constant.BLOCK_FRAGILE ||
-//                        map[i][j] == Constant.ITEM_SPEED ||
-//                        map[i][j] == Constant.ITEM_POWER ||
-//                        map[i][j] == Constant.ITEM_BOMB_NUMBER)
-//                    p.image(imgs[1], i * 40, j * 40);
+                    p.image(imgs[0], i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH);
                 else {
                     Block block = getBlock(i, j);
                     if (block.getType() == Constant.BLOCK_FRAGILE && !block.isCanGo()) {
-                        p.image(imgs[1], i * 40, j * 40);
+                        p.image(imgs[1], i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH);
                     }
 
                     if (block.getType() == Constant.ITEM_BOMB_NUMBER && !block.isCanGo()) {
-                        p.image(imgs[1], i * 40, j * 40);
+                        p.image(imgs[1], i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH);
                     } else if (block.getType() == Constant.ITEM_BOMB_NUMBER && block.isCanGo()) {
-                        p.image(bombNumberItemImage, i * 40, j * 40, 40, 40);
+                        p.image(bombNumberItemImage, i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                     }
                     if (block.getType() == Constant.ITEM_POWER && !block.isCanGo()) {
-                        p.image(imgs[1], i * 40, j * 40);
+                        p.image(imgs[1], i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH);
                     } else if (block.getType() == Constant.ITEM_POWER && block.isCanGo()) {
-                        p.image(powerItemImage, i * 40, j * 40, 40, 40);
+                        p.image(powerItemImage, i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                     }
 
                     if (block.getType() == Constant.ITEM_SPEED && !block.isCanGo()) {
-                        p.image(imgs[1], i * 40, j * 40);
+                        p.image(imgs[1], i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH);
                     } else if (block.getType() == Constant.ITEM_SPEED && block.isCanGo()) {
-                        p.image(speedItemImage, i * 40, j * 40, 40, 40);
+                        p.image(speedItemImage, i * Constant.BLOCK_WIDTH, j * Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH, Constant.BLOCK_WIDTH);
                     }
                 }
             }

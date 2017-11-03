@@ -30,6 +30,10 @@ public class Bomb {
         return timer;
     }
 
+    public void setTimer(long timer) {
+        this.timer = timer;
+    }
+
     public int checkTimer(long currentTime) {
         if (currentTime - timer > 3800)
             return 0;

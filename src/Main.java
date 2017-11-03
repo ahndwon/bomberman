@@ -193,8 +193,8 @@ public class Main extends PApplet {
                 isDownPressed2 = true;
                 // S
                 break;
-            case 20:
-                // Capslock
+            case 17:
+                // control
                 player2.setBomb();
                 break;
             case 76:
